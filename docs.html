@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FedBloom Documentation — User Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --accent: #6366F1; --accent2: #8B5CF6; --green: #4ADE80; }
+    [data-theme="dark"] {
+      --bg: #0D0F14; --bg2: #15171C; --bg3: #1A1D24; --bg4: #22242A;
+      --border: #23262E; --border2: #2C313C;
+      --text: #E6E6E6; --text2: #8A92A6; --text3: #5A6070;
+      --code-bg: #0a0c10; --sidebar-bg: #0D0F14;
+      --nav-bg: rgba(13,15,20,.9);
+    }
+    [data-theme="light"] {
+      --bg: #F8FAFC; --bg2: #FFFFFF; --bg3: #F3F4F6; --bg4: #E5E7EB;
+      --border: #E5E7EB; --border2: #D1D5DB;
+      --text: #111827; --text2: #6B7280; --text3: #9CA3AF;
+      --code-bg: #1E1E2E; --sidebar-bg: #FFFFFF;
+      --nav-bg: rgba(248,250,252,.9);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+    /* ── TOP NAV ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 60px;
+      background: var(--nav-bg); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; padding: 0 28px; gap: 20px;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 16px; }
+    .topbar-logo img { width: 28px; height: 28px; object-fit: contain; }
+    .topbar-divider { width: 1px; height: 22px; background: var(--border2); }
+    .topbar-title { font-size: 14px; color: var(--text2); font-weight: 500; }
+    .topbar-right { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+    .btn-back { font-size: 13px; color: var(--text2); text-decoration: none; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border2); transition: all .2s; }
+    .btn-back:hover { color: var(--text); border-color: var(--accent); }
+    .theme-btn { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--border2); background: var(--bg3); cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+    .theme-btn:hover { border-color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .layout { display: flex; min-height: 100vh; padding-top: 60px; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 260px; flex-shrink: 0; position: sticky; top: 60px; height: calc(100vh - 60px);
+      overflow-y: auto; background: var(--sidebar-bg);
+      border-right: 1px solid var(--border); padding: 24px 16px;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-heading { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); padding: 0 10px; margin-bottom: 6px; }
+    .sidebar-link {
+      display: block; padding: 7px 10px; border-radius: 8px; font-size: 14px;
+      color: var(--text2); text-decoration: none; transition: all .15s;
+    }
+    .sidebar-link:hover { color: var(--text); background: var(--bg3); }
+    .sidebar-link.active { color: var(--accent); background: rgba(99,102,241,.1); font-weight: 600; }
+    .sidebar-link.sub { padding-left: 22px; font-size: 13px; }
+
+    /* ── CONTENT ── */
+    .content { flex: 1; max-width: 860px; padding: 56px 60px; min-width: 0; }
+    @media (max-width: 900px) { .sidebar { display: none; } .content { padding: 40px 24px; } }
+
+    /* ── TYPOGRAPHY ── */
+    h1 { font-size: 38px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 14px; line-height: 1.15; }
+    h2 { font-size: 26px; font-weight: 700; letter-spacing: -.5px; margin: 56px 0 14px; padding-top: 20px; border-top: 1px solid var(--border); }
+    h2:first-of-type { border-top: none; margin-top: 32px; }
+    h3 { font-size: 18px; font-weight: 700; margin: 32px 0 10px; }
+    h4 { font-size: 15px; font-weight: 600; margin: 20px 0 8px; color: var(--text2); }
+    p  { font-size: 15px; color: var(--text2); margin-bottom: 14px; }
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { font-size: 15px; color: var(--text2); margin-bottom: 6px; }
+    li strong { color: var(--text); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    strong { color: var(--text); font-weight: 600; }
+    em { color: var(--text); font-style: italic; }
+
+    /* ── LEAD ── */
+    .lead { font-size: 18px; color: var(--text2); line-height: 1.7; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 32px; }
+
+    /* ── CALLOUTS ── */
+    .callout { border-radius: 12px; padding: 18px 20px; margin: 20px 0; font-size: 14px; display: flex; gap: 12px; }
+    .callout-tip  { background: rgba(74,222,128,.08); border: 1px solid rgba(74,222,128,.2); }
+    .callout-note { background: rgba(99,102,241,.08); border: 1px solid rgba(99,102,241,.2); }
+    .callout-warn { background: rgba(251,191,36,.08); border: 1px solid rgba(251,191,36,.2); }
+    .callout-icon { font-size: 18px; flex-shrink: 0; }
+    .callout-body { color: var(--text2); line-height: 1.6; }
+    .callout-body strong { color: var(--text); }
+
+    /* ── CODE ── */
+    code { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--bg3); border: 1px solid var(--border2); border-radius: 5px; padding: 2px 6px; color: #A78BFA; }
+    pre { background: var(--code-bg); border: 1px solid var(--border2); border-radius: 12px; padding: 22px 24px; overflow-x: auto; margin: 18px 0; }
+    pre code { background: none; border: none; padding: 0; font-size: 13px; line-height: 1.8; color: #A78BFA; }
+    .hlg { color: var(--green); } /* green highlight */
+    .hlb { color: #60A5FA; }      /* blue highlight */
+    .hlc { color: #6B7585; }      /* comment */
+
+    /* ── STEPS ── */
+    .doc-steps { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+    .doc-step { display: flex; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--border); }
+    .doc-step:last-child { border-bottom: none; }
+    .doc-step-num { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; background: linear-gradient(135deg,var(--accent),var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; }
+    .doc-step-body p { margin-bottom: 4px; }
+
+    /* ── CARDS ── */
+    .doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 14px; margin: 20px 0; }
+    .doc-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; transition: border-color .2s; }
+    .doc-card:hover { border-color: var(--accent); }
+    .doc-card-icon { font-size: 26px; margin-bottom: 10px; }
+    .doc-card-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .doc-card-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+    /* ── TABLE ── */
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+    th { background: var(--bg3); padding: 10px 14px; text-align: left; font-weight: 600; color: var(--text); border: 1px solid var(--border2); }
+    td { padding: 10px 14px; border: 1px solid var(--border); color: var(--text2); }
+    tr:hover td { background: var(--bg3); }
+
+    /* ── BADGE ── */
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; margin-left: 8px; vertical-align: middle; }
+    .badge-free { background: rgba(74,222,128,.15); color: var(--green); }
+    .badge-pro  { background: rgba(96,165,250,.15); color: #60A5FA; }
+    .badge-adv  { background: rgba(167,139,250,.15); color: #A78BFA; }
+
+    /* ── SCENARIO CARDS ── */
+    .scenario-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 18px 0; }
+    .scenario-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .scenario-icon { font-size: 32px; }
+    .scenario-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .scenario-sector { font-size: 12px; color: var(--text3); font-weight: 600; text-transform: uppercase; letter-spacing: .6px; }
+
+    /* ── TOC ── */
+    .toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; margin-bottom: 40px; }
+    .toc h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--text3); margin-bottom: 12px; }
+    .toc ol { margin: 0; padding-left: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 20px; }
+    .toc li { font-size: 14px; }
+    .toc a { color: var(--text2); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <img src="files/fedbloom-stage-D/fedkit/src/fedkit/gui/resources/logo.png" alt="FedBloom" />
+    FedBloom
+  </a>
+  <div class="topbar-divider"></div>
+  <span class="topbar-title">Documentation</span>
+  <div class="topbar-right">
+    <a href="index.html" class="btn-back">← Back to site</a>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀️</button>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Getting Started</div>
+      <a href="#introduction"   class="sidebar-link">Introduction</a>
+      <a href="#installation"   class="sidebar-link">Installation</a>
+      <a href="#first-launch"   class="sidebar-link">First Launch</a>
+      <a href="#roles"          class="sidebar-link">Server vs Client</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Using FedBloom</div>
+      <a href="#experiments"    class="sidebar-link">Creating Experiments</a>
+      <a href="#datasets"       class="sidebar-link">Datasets</a>
+      <a href="#models"         class="sidebar-link">Models</a>
+      <a href="#aggregation"    class="sidebar-link">Aggregation</a>
+      <a href="#partitioners"   class="sidebar-link">Partitioners</a>
+      <a href="#running"        class="sidebar-link">Running & Monitoring</a>
+      <a href="#results"        class="sidebar-link">Results & Artefacts</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Deployment</div>
+      <a href="#local-network"  class="sidebar-link">Local Network</a>
+      <a href="#tailscale"      class="sidebar-link">Tailscale VPN</a>
+      <a href="#port-forwarding" class="sidebar-link">Port Forwarding</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Advanced</div>
+      <a href="#hpo"            class="sidebar-link">Hyperparameter Opt.</a>
+      <a href="#privacy"        class="sidebar-link">Privacy & Security</a>
+      <a href="#assistant"      class="sidebar-link">AI Assistant</a>
+      <a href="#subscription"   class="sidebar-link">Plans & Licensing</a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-heading">Use Cases</div>
+      <a href="#healthcare"     class="sidebar-link">Healthcare</a>
+      <a href="#finance"        class="sidebar-link">Finance & Banking</a>
+      <a href="#genomics"       class="sidebar-link">Genomics</a>
+      <a href="#insurance"      class="sidebar-link">Insurance</a>
+      <a href="#research"       class="sidebar-link">Academic Research</a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content">
+
+    <!-- INTRO -->
+    <div id="introduction">
+      <h1>FedBloom User Guide</h1>
+      <p class="lead">
+        FedBloom lets anyone — clinicians, bankers, researchers, data analysts — train machine learning
+        models on private, distributed data <strong>without writing a single line of code</strong>.
+        This guide walks you through every feature, from first launch to real network deployment.
+      </p>
+
+      <div class="toc">
+        <h4>On this page</h4>
+        <ol>
+          <li><a href="#introduction">Introduction</a></li>
+          <li><a href="#installation">Installation</a></li>
+          <li><a href="#first-launch">First Launch</a></li>
+          <li><a href="#roles">Server vs Client</a></li>
+          <li><a href="#experiments">Creating Experiments</a></li>
+          <li><a href="#datasets">Datasets</a></li>
+          <li><a href="#models">Models</a></li>
+          <li><a href="#running">Running & Monitoring</a></li>
+          <li><a href="#local-network">Deployment</a></li>
+          <li><a href="#hpo">HPO & Privacy</a></li>
+          <li><a href="#healthcare">Use Cases</a></li>
+          <li><a href="#subscription">Plans</a></li>
+        </ol>
+      </div>
+
+      <h3>What is Federated Learning?</h3>
+      <p>
+        Federated Learning (FL) is a technique that trains a shared AI model across multiple
+        devices or organisations <strong>without ever moving the raw data</strong>. Each participant
+        trains locally on their own data; only model updates (not data) travel over the network.
+        The server aggregates these updates into a single improved global model.
+      </p>
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-body">
+          <strong>Example:</strong> Five hospitals each train on their own patient records.
+          No patient data leaves any hospital. The resulting global model is better than any
+          single hospital could have trained alone.
+        </div>
+      </div>
+
+      <h3>What makes FedBloom different?</h3>
+      <p>
+        Traditional federated learning requires Python expertise, knowledge of frameworks like
+        Flower or TensorFlow Federated, and hours of configuration. FedBloom replaces all of that
+        with a desktop GUI — pick your model, upload your data, click Run.
+      </p>
+    </div>
+
+    <!-- INSTALLATION -->
+    <h2 id="installation">Installation</h2>
+    <h3>Windows Installer (recommended)</h3>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body">
+          <p><strong>Download</strong> <code>FedBloom-Setup.exe</code> from the website.</p>
+        </div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body">
+          <p><strong>Run</strong> the installer and follow the prompts. No admin rights required for a per-user install.</p>
+        </div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body">
+          <p><strong>Launch</strong> FedBloom from the Start Menu or Desktop shortcut.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3>Run from Source (developers)</h3>
+    <pre><code><span class="hlc"># Clone the repository</span>
+git clone https://github.com/ziaurrehman-bit/FedBloom
+cd FedBloom/files/fedbloom-stage-D/fedkit
+
+<span class="hlc"># Install in editable mode</span>
+pip install -e .
+
+<span class="hlc"># Launch</span>
+fedkit</code></pre>
+
+    <div class="callout callout-note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body"><strong>Python 3.10+</strong> is required when running from source. The Windows installer bundles its own Python runtime.</div>
+    </div>
+
+    <!-- FIRST LAUNCH -->
+    <h2 id="first-launch">First Launch</h2>
+    <p>When FedBloom opens you will see the <strong>Welcome Screen</strong>. This is the starting point for every session.</p>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body">
+          <p>A <strong>splash screen</strong> appears while services initialise (usually 2–5 seconds).</p>
+        </div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body">
+          <p>The <strong>Welcome Screen</strong> shows two cards: <em>Enter as Server</em> and <em>Enter as Client</em>. Choose your role for this session.</p>
+        </div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body">
+          <p>You can <strong>switch roles</strong> at any time using the arrow icon at the bottom of the sidebar.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROLES -->
+    <h2 id="roles">Server vs Client</h2>
+    <p>Every federated learning session has two types of participants:</p>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">🖥</div>
+        <div class="doc-card-title">Server</div>
+        <div class="doc-card-desc">Orchestrates the FL plan. Creates experiments, sets configuration, starts training rounds, and aggregates model updates from clients.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📡</div>
+        <div class="doc-card-title">Client</div>
+        <div class="doc-card-desc">Brings local data. Connects to the server, receives the global model, trains locally on private data, and returns updates.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">For a <strong>simulation</strong> (all on one machine), you only need the Server role — FedBloom spawns virtual clients internally. Real network deployment requires separate machines running the Client role.</div>
+    </div>
+
+    <!-- EXPERIMENTS -->
+    <h2 id="experiments">Creating Experiments</h2>
+    <p>Experiments are the core unit of work in FedBloom. Each experiment defines a complete FL training job.</p>
+
+    <h3>Create a new experiment</h3>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body"><p>Navigate to <strong>Experiments</strong> in the sidebar. Click <strong>+ New Experiment</strong>.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body"><p>Enter an <strong>experiment name</strong> and optional description.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body"><p>Select your <strong>Dataset</strong>, <strong>Model</strong>, <strong>Aggregation strategy</strong>, and <strong>Partitioner</strong> from the dropdowns.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">4</div>
+        <div class="doc-step-body"><p>Set <strong>Number of clients</strong>, <strong>Rounds</strong>, <strong>Local epochs</strong>, <strong>Batch size</strong>, and <strong>Learning rate</strong>.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">5</div>
+        <div class="doc-step-body"><p>Choose <strong>Simulation</strong> (single machine) or <strong>Real Network</strong> deployment mode.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">6</div>
+        <div class="doc-step-body"><p>Click <strong>Save</strong>. The experiment appears in the list, ready to run.</p></div>
+      </div>
+    </div>
+
+    <h3>Configuration reference</h3>
+    <table>
+      <tr><th>Parameter</th><th>Description</th><th>Typical range</th></tr>
+      <tr><td><strong>Clients</strong></td><td>Number of participating clients per round</td><td>2 – 500</td></tr>
+      <tr><td><strong>Rounds</strong></td><td>Number of FL communication rounds</td><td>5 – 100</td></tr>
+      <tr><td><strong>Local epochs</strong></td><td>Training epochs per client per round</td><td>1 – 20</td></tr>
+      <tr><td><strong>Batch size</strong></td><td>Mini-batch size for local training</td><td>16 – 256</td></tr>
+      <tr><td><strong>Learning rate</strong></td><td>Optimizer step size</td><td>0.0001 – 0.1</td></tr>
+    </table>
+
+    <!-- DATASETS -->
+    <h2 id="datasets">Datasets</h2>
+    <h3>Built-in datasets</h3>
+    <p>FedBloom ships with several standard datasets for experimentation:</p>
+    <table>
+      <tr><th>Dataset</th><th>Task</th><th>Features</th><th>Classes</th></tr>
+      <tr><td>MNIST</td><td>Image classification</td><td>784 pixels</td><td>10 digits</td></tr>
+      <tr><td>CIFAR-10</td><td>Image classification</td><td>32×32 RGB</td><td>10 objects</td></tr>
+      <tr><td>Letter Recognition</td><td>Classification</td><td>16 numeric</td><td>26 letters</td></tr>
+      <tr><td>Breast Cancer</td><td>Binary classification</td><td>30 numeric</td><td>2 (benign/malignant)</td></tr>
+      <tr><td>Iris</td><td>Multi-class</td><td>4 numeric</td><td>3 species</td></tr>
+    </table>
+
+    <h3>Custom CSV datasets</h3>
+    <p>You can upload <strong>any CSV file</strong> as a dataset. FedBloom handles all preprocessing automatically:</p>
+    <ul>
+      <li>Last column is treated as the <strong>label / target</strong></li>
+      <li>Numeric columns are <strong>z-score normalised</strong></li>
+      <li>String/categorical columns are <strong>one-hot encoded</strong></li>
+      <li>Data is <strong>split 80/20</strong> into train and test sets</li>
+      <li>Rows are distributed across clients using the selected <strong>Partitioner</strong></li>
+    </ul>
+    <div class="callout callout-note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body"><strong>CSV format:</strong> First row must be a header. Missing values should be removed before upload. Minimum 50 rows recommended for meaningful training.</div>
+    </div>
+
+    <!-- MODELS -->
+    <h2 id="models">Models</h2>
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">🧠</div>
+        <div class="doc-card-title">MLP <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Multi-Layer Perceptron. General-purpose for tabular data. Fast and lightweight.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📉</div>
+        <div class="doc-card-title">Logistic Regression <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Linear model for binary and multi-class classification. Interpretable and efficient.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🌲</div>
+        <div class="doc-card-title">Decision Tree <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Rule-based model. Easy to explain to non-technical stakeholders.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🌳</div>
+        <div class="doc-card-title">Random Forest <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Ensemble of decision trees. Robust and accurate for tabular data.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🚀</div>
+        <div class="doc-card-title">XGBoost <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Gradient-boosted trees. State-of-the-art for structured/tabular data.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📊</div>
+        <div class="doc-card-title">Naive Bayes <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Probabilistic classifier. Very fast, works well on small datasets.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🖼</div>
+        <div class="doc-card-title">CNN <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Convolutional Neural Network for image data. Works with MNIST, CIFAR-10.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">⚡</div>
+        <div class="doc-card-title">DNN <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Deep Neural Network. More layers than MLP; good for complex tabular tasks.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🏆</div>
+        <div class="doc-card-title">ResNet18 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Residual network for image classification. Transfer learning ready.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📏</div>
+        <div class="doc-card-title">Linear SVM <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Support Vector Machine with linear kernel. Good for high-dimensional data.</div>
+      </div>
+    </div>
+
+    <!-- AGGREGATION -->
+    <h2 id="aggregation">Aggregation Strategies</h2>
+    <p>The aggregation strategy controls how client model updates are combined into the global model.</p>
+    <table>
+      <tr><th>Strategy</th><th>Best for</th><th>Plan</th></tr>
+      <tr><td><strong>FedAvg</strong></td><td>General use. Averages client weights proportional to dataset size.</td><td><span class="badge badge-free">Free</span></td></tr>
+      <tr><td><strong>FedProx</strong></td><td>Non-IID data. Adds a proximal term to handle heterogeneous clients.</td><td><span class="badge badge-pro">Pro</span></td></tr>
+      <tr><td><strong>Krum</strong></td><td>Byzantine robustness. Detects and ignores potentially malicious clients.</td><td><span class="badge badge-adv">Advanced</span></td></tr>
+    </table>
+
+    <!-- PARTITIONERS -->
+    <h2 id="partitioners">Partitioners</h2>
+    <p>Partitioners control how data is distributed across clients — crucial for realistic experiments.</p>
+    <table>
+      <tr><th>Partitioner</th><th>Description</th></tr>
+      <tr><td><strong>IID</strong></td><td>Independent & Identically Distributed. Each client gets a random uniform sample. Ideal baseline.</td></tr>
+      <tr><td><strong>Dirichlet</strong></td><td>Non-IID distribution using a Dirichlet concentration parameter. Models real-world heterogeneity.</td></tr>
+      <tr><td><strong>Label Shard</strong></td><td>Each client receives data from only a subset of classes. Extreme non-IID scenario.</td></tr>
+      <tr><td><strong>Custom</strong></td><td>Specify exact sample counts per client. FedBloom auto-scales if totals exceed dataset size.</td></tr>
+    </table>
+
+    <!-- RUNNING -->
+    <h2 id="running">Running & Monitoring</h2>
+    <h3>Starting a run</h3>
+    <p>Select an experiment from the list and click <strong>▶ Start</strong>. FedBloom will:</p>
+    <ol>
+      <li>Initialise the FL server and virtual clients (simulation) or wait for real clients (deployment)</li>
+      <li>Begin round 1 — each client trains locally and sends updates</li>
+      <li>Aggregate updates and broadcast the new global model</li>
+      <li>Repeat for all configured rounds</li>
+    </ol>
+
+    <h3>Live metrics dashboard</h3>
+    <p>While training runs, the <strong>Charts</strong> tab shows live plots:</p>
+    <ul>
+      <li><strong>Global accuracy</strong> — model accuracy on the global test set per round</li>
+      <li><strong>Global loss</strong> — training loss curve</li>
+      <li><strong>Precision / Recall / F1</strong> — per-class metrics bar chart</li>
+      <li><strong>ROC curve</strong> — with AUC score</li>
+      <li><strong>Computation cost</strong> — seconds per round</li>
+      <li><strong>Communication cost</strong> — MB exchanged per round</li>
+      <li><strong>CPU / GPU utilisation</strong> — live resource usage</li>
+      <li><strong>Memory utilisation</strong> — RAM and GPU memory</li>
+    </ul>
+
+    <h3>Topology view</h3>
+    <p>The <strong>Topology</strong> tab shows a visual graph of connected clients with their training status:</p>
+    <ul>
+      <li><strong>Blue</strong> — idle / waiting</li>
+      <li><strong>Orange</strong> — training locally</li>
+      <li><strong>Green</strong> — completed, update sent</li>
+      <li><strong>Red</strong> — error</li>
+    </ul>
+
+    <!-- RESULTS -->
+    <h2 id="results">Results & Artefacts</h2>
+    <h3>Results tab</h3>
+    <p>After training, the <strong>Results</strong> tab shows a table with per-client and global metrics for every round. You can export this as a CSV file.</p>
+
+    <h3>Artefacts tab</h3>
+    <p>The <strong>Artefacts</strong> tab lists all saved model files and metadata:</p>
+    <ul>
+      <li><code>training_metadata.json</code> — full experiment configuration</li>
+      <li><code>metrics_all_rounds.csv</code> — all metrics for all rounds</li>
+      <li><code>round_XXX_global_model.pkl</code> — saved global model per round</li>
+    </ul>
+    <p>Click <strong>Download Bundle</strong> to export all artefacts as a ZIP.</p>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">Saved <code>.pkl</code> model files can be loaded directly in Python using <code>pickle.load()</code> for inference or further fine-tuning.</div>
+    </div>
+
+    <!-- LOCAL NETWORK -->
+    <h2 id="local-network">Local Network Deployment</h2>
+    <p>When all participants are on the same WiFi or LAN:</p>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body"><p>Server: create an experiment, select <strong>Real Network</strong> mode, note the displayed <strong>IP address and port</strong>.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body"><p>Clients: open FedBloom, choose <strong>Enter as Client</strong>, enter the server IP and port, click <strong>Connect</strong>.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body"><p>Server: once enough clients appear in the Topology view, click <strong>▶ Start</strong>.</p></div>
+      </div>
+    </div>
+
+    <h2 id="tailscale">Tailscale VPN (cross-network)</h2>
+    <p>For participants on different networks (e.g., different hospitals, home offices):</p>
+    <ol>
+      <li>Install <a href="https://tailscale.com" target="_blank">Tailscale</a> on every machine.</li>
+      <li>All machines join the same Tailscale network (or a shared Tailnet).</li>
+      <li>Use the machine's <strong>Tailscale IP</strong> (e.g., <code>100.x.x.x</code>) as the server address.</li>
+      <li>No port forwarding or firewall rules needed — Tailscale handles NAT traversal.</li>
+    </ol>
+
+    <h2 id="port-forwarding">Public IP + Port Forwarding</h2>
+    <p>If Tailscale is not an option:</p>
+    <ol>
+      <li>Find your server's <strong>public IP</strong> (search "what is my IP" in a browser).</li>
+      <li>In your router, create a <strong>port forward rule</strong>: external port → server machine's local IP, port 8080.</li>
+      <li>Ensure your OS <strong>firewall allows</strong> inbound connections on port 8080.</li>
+      <li>Clients connect using your public IP and the forwarded port.</li>
+    </ol>
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body"><strong>Security note:</strong> Port forwarding exposes your machine to the internet. Use a firewall allowlist by IP where possible, or prefer Tailscale for production deployments.</div>
+    </div>
+
+    <!-- HPO -->
+    <h2 id="hpo">Hyperparameter Optimisation (HPO) <span class="badge badge-pro">Pro</span></h2>
+    <p>HPO automatically searches for the best training configuration. Navigate to <strong>HPO</strong> in the sidebar:</p>
+    <ol>
+      <li>Select the experiment to optimise.</li>
+      <li>Choose the metric to maximise (accuracy, F1) or minimise (loss).</li>
+      <li>Define search ranges for learning rate, batch size, local epochs.</li>
+      <li>Set the number of trials and click <strong>Run HPO</strong>.</li>
+      <li>Results show the best configuration — apply it to your experiment with one click.</li>
+    </ol>
+
+    <!-- PRIVACY -->
+    <h2 id="privacy">Privacy & Security <span class="badge badge-pro">Pro</span></h2>
+    <h3>Differential Privacy (DP-SGD)</h3>
+    <p>Enable DP in the experiment configuration to add mathematically guaranteed privacy noise to client updates. This prevents the server from reconstructing raw training data from model weights.</p>
+    <ul>
+      <li><strong>Noise multiplier</strong> — higher = more privacy, lower accuracy</li>
+      <li><strong>Max grad norm</strong> — clips gradients before adding noise</li>
+    </ul>
+    <h3>Krum Aggregation</h3>
+    <p>Krum filters out model updates that deviate significantly from the majority — protecting against poisoning attacks from compromised clients. Available on the <span class="badge badge-adv">Advanced</span> plan.</p>
+
+    <!-- ASSISTANT -->
+    <h2 id="assistant">AI Assistant <span class="badge badge-adv">Advanced</span></h2>
+    <p>The AI Assistant (powered by a local <a href="https://ollama.com" target="_blank">Ollama</a> LLM) helps you interpret experiment results, suggest configurations, and explain model behaviour.</p>
+    <h3>Setup</h3>
+    <ol>
+      <li>Install Ollama from <a href="https://ollama.com" target="_blank">ollama.com</a>.</li>
+      <li>Pull a model: <code>ollama pull llama3</code></li>
+      <li>In FedBloom Settings, set the Ollama base URL (default: <code>http://localhost:11434</code>) and model name.</li>
+    </ol>
+    <p>Open the <strong>Assistant</strong> section in the sidebar to start a conversation about your experiments.</p>
+
+    <!-- SUBSCRIPTION -->
+    <h2 id="subscription">Plans & Licensing</h2>
+    <table>
+      <tr><th>Feature</th><th><span class="badge badge-free">Free</span></th><th><span class="badge badge-pro">Pro €3/mo</span></th><th><span class="badge badge-adv">Advanced €5/mo</span></th></tr>
+      <tr><td>Max clients</td><td>5</td><td>50</td><td>500</td></tr>
+      <tr><td>CNN / DNN / ResNet18</td><td>—</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Differential Privacy</td><td>—</td><td>✓</td><td>✓</td></tr>
+      <tr><td>HPO</td><td>—</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Real network deployment</td><td>—</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Krum aggregation</td><td>—</td><td>—</td><td>✓</td></tr>
+      <tr><td>XAI / SHAP</td><td>—</td><td>—</td><td>✓</td></tr>
+      <tr><td>AI Assistant</td><td>—</td><td>—</td><td>✓</td></tr>
+    </table>
+    <p>Activate your plan in the <strong>Subscription & Account</strong> section by entering the license key received after purchase.</p>
+
+    <!-- ── USE CASES ── -->
+    <h2 id="healthcare">Use Case: Healthcare</h2>
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <span class="scenario-icon">🏥</span>
+        <div>
+          <div class="scenario-title">Multi-Hospital Diagnostic Model</div>
+          <div class="scenario-sector">Healthcare · Patient Privacy</div>
+        </div>
+      </div>
+      <p><strong>Problem:</strong> Five hospitals want to train a chest X-ray classification model. Patient data cannot leave each hospital due to HIPAA / GDPR regulations.</p>
+      <p><strong>FedBloom solution:</strong></p>
+      <ol>
+        <li>Each hospital installs FedBloom on a local workstation.</li>
+        <li>One hospital acts as <strong>Server</strong>; the rest are <strong>Clients</strong>.</li>
+        <li>Server creates experiment: Model = <em>CNN</em>, Dataset = custom X-ray CSV, Aggregation = <em>FedAvg</em>.</li>
+        <li>Clients connect via Tailscale. Each trains on their local patient records.</li>
+        <li>After 20 rounds, the global model outperforms any individual hospital's model.</li>
+      </ol>
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-body">Enable <strong>Differential Privacy</strong> to add a provable privacy guarantee — no patient record can be reconstructed from shared model updates.</div>
+      </div>
+    </div>
+
+    <h2 id="finance">Use Case: Finance & Banking</h2>
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <span class="scenario-icon">🏦</span>
+        <div>
+          <div class="scenario-title">Cross-Bank Fraud Detection</div>
+          <div class="scenario-sector">Finance · Regulatory Compliance</div>
+        </div>
+      </div>
+      <p><strong>Problem:</strong> Six banks want to improve fraud detection. Transaction data is commercially sensitive and regulated — sharing is not permitted.</p>
+      <p><strong>FedBloom solution:</strong></p>
+      <ol>
+        <li>Each bank exports a transaction CSV with features (amount, time, merchant category) and a fraud label.</li>
+        <li>Upload CSVs locally to each bank's FedBloom instance (data never leaves the bank).</li>
+        <li>Server creates experiment: Model = <em>XGBoost</em>, Partitioner = <em>Dirichlet</em> (realistic non-IID).</li>
+        <li>Aggregate with <strong>Krum</strong> to guard against a potentially compromised participant.</li>
+        <li>Global model catches fraud patterns that no single bank's local model could detect.</li>
+      </ol>
+    </div>
+
+    <h2 id="genomics">Use Case: Genomics</h2>
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <span class="scenario-icon">🧬</span>
+        <div>
+          <div class="scenario-title">Disease Gene Prediction Across Research Labs</div>
+          <div class="scenario-sector">Genomics · Research</div>
+        </div>
+      </div>
+      <p><strong>Problem:</strong> Research institutions each have genomic datasets but cannot share raw sequences due to participant consent agreements.</p>
+      <p><strong>FedBloom solution:</strong></p>
+      <ol>
+        <li>Each lab uploads their genomic feature CSV. FedBloom auto-encodes categorical allele data.</li>
+        <li>Model = <em>MLP</em> or <em>DNN</em>, Rounds = 30, Local epochs = 5.</li>
+        <li>Use the <strong>AI Assistant</strong> to interpret SHAP feature importances — which genes matter most?</li>
+        <li>Export the trained global model for deployment in clinical decision-support systems.</li>
+      </ol>
+    </div>
+
+    <h2 id="insurance">Use Case: Insurance</h2>
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <span class="scenario-icon">🛡</span>
+        <div>
+          <div class="scenario-title">Federated Risk Scoring</div>
+          <div class="scenario-sector">Insurance · Actuarial</div>
+        </div>
+      </div>
+      <p><strong>Problem:</strong> Multiple insurance companies want a better risk model but can't pool policyholder data.</p>
+      <p><strong>FedBloom solution:</strong></p>
+      <ol>
+        <li>Each insurer prepares a CSV of policy features and claim outcomes.</li>
+        <li>Model = <em>Random Forest</em>, Aggregation = <em>FedAvg</em>, Clients = number of insurers.</li>
+        <li>Run HPO to find the optimal number of trees and max depth.</li>
+        <li>The resulting global risk model is more accurate and less biased than any single company's model.</li>
+      </ol>
+    </div>
+
+    <h2 id="research">Use Case: Academic Research</h2>
+    <div class="scenario-card">
+      <div class="scenario-header">
+        <span class="scenario-icon">🎓</span>
+        <div>
+          <div class="scenario-title">Reproducible FL Benchmarking</div>
+          <div class="scenario-sector">Academia · Research</div>
+        </div>
+      </div>
+      <p><strong>Problem:</strong> A researcher wants to benchmark FedAvg vs FedProx on non-IID data without writing framework code.</p>
+      <p><strong>FedBloom solution:</strong></p>
+      <ol>
+        <li>Create two experiments with identical settings, changing only the aggregation strategy.</li>
+        <li>Use <strong>Dirichlet partitioner</strong> (α = 0.1) for strong non-IID simulation.</li>
+        <li>Run both, export metrics CSVs, compare accuracy and convergence speed.</li>
+        <li>Save plots directly from the Charts tab for publication figures.</li>
+      </ol>
+      <div class="callout callout-note">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-body">All experiments are stored in a local SQLite database at <code>~/.fedbloom/fedbloom.db</code>. You can query it directly for custom analysis.</div>
+      </div>
+    </div>
+
+    <div style="margin-top:60px; padding-top:32px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <p style="margin:0;">Questions? <a href="mailto:engrziaurrehman.kicsit@gmail.com">Contact the developer</a></p>
+      <a href="index.html" class="btn-back">← Back to FedBloom</a>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const btn  = document.getElementById('themeBtn');
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+    localStorage.setItem('fedbloom-theme', t);
+  }
+  function toggleTheme() { setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+  const saved = localStorage.getItem('fedbloom-theme');
+  setTheme(saved || 'dark');
+
+  // Sidebar active link on scroll
+  const sections = document.querySelectorAll('[id]');
+  const links    = document.querySelectorAll('.sidebar-link');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+  });
+</script>
+</body>
+</html>
