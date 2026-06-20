@@ -467,57 +467,57 @@
     }
     .code-block .comment { color: var(--text3); }
 
-    /* ── DEVELOPER ───────────────────────────────────────────────────── */
+    /* ── TEAM ────────────────────────────────────────────────────────── */
     #developer { background: var(--bg2); max-width: 100%; padding: 100px 40px; }
-    #developer .inner { max-width: 900px; margin: 0 auto; text-align: center; }
-    .dev-card {
+    #developer .inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+    .team-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 20px; margin-top: 50px; align-items: stretch;
+    }
+    @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .team-grid { grid-template-columns: 1fr; } }
+    .team-card {
       background: var(--bg3); border: 1px solid var(--border2);
-      border-radius: 28px; padding: 52px; margin-top: 50px;
-      position: relative; overflow: hidden;
+      border-radius: 24px; padding: 32px 22px;
+      position: relative; overflow: hidden; transition: all var(--transition);
+      display: flex; flex-direction: column; align-items: center;
     }
-    .dev-card::before {
+    .team-card::before {
       content: ''; position: absolute; inset: -1px;
-      background: linear-gradient(135deg, rgba(99,102,241,.2), rgba(139,92,246,.1), transparent 60%);
-      border-radius: 28px; z-index: 0;
-      pointer-events: none;
+      background: linear-gradient(135deg, rgba(99,102,241,.18), rgba(139,92,246,.08), transparent 60%);
+      border-radius: 24px; z-index: 0; pointer-events: none;
     }
-    .dev-avatar-wrap {
-      position: relative; display: inline-block; margin-bottom: 24px;
-    }
-    .dev-avatar {
-      width: 110px; height: 110px; border-radius: 50%;
+    .team-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .team-avatar-wrap { position: relative; margin-bottom: 18px; }
+    .team-avatar {
+      width: 76px; height: 76px; border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       display: flex; align-items: center; justify-content: center;
-      font-size: 44px; font-weight: 900; color: #fff;
-      border: 4px solid var(--bg);
-      box-shadow: 0 0 0 4px rgba(99,102,241,.3);
-      margin: 0 auto;
+      font-size: 30px; font-weight: 900; color: #fff;
+      border: 3px solid var(--bg); box-shadow: 0 0 0 3px rgba(99,102,241,.3);
+      overflow: hidden;
     }
-    .dev-badge {
-      position: absolute; bottom: 4px; right: -4px;
-      width: 30px; height: 30px; border-radius: 50%;
-      background: var(--green); border: 3px solid var(--bg3);
+    .team-avatar img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+    }
+    .team-badge {
+      position: absolute; bottom: -2px; right: -2px;
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--green); border: 2px solid var(--bg3);
       display: flex; align-items: center; justify-content: center;
-      font-size: 14px;
+      font-size: 11px;
     }
-    .dev-name { font-size: 28px; font-weight: 800; letter-spacing: -.5px; margin-bottom: 6px; }
-    .dev-title { font-size: 16px; color: var(--text2); margin-bottom: 24px; }
-    .dev-bio { font-size: 15px; color: var(--text2); max-width: 560px; margin: 0 auto 32px; line-height: 1.7; }
-    .dev-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-    .dev-link {
-      display: inline-flex; align-items: center; gap: 8px;
+    .team-name { font-size: 17px; font-weight: 800; letter-spacing: -.2px; margin-bottom: 4px; position: relative; z-index: 1; }
+    .team-role { font-size: 13px; color: var(--accent2); font-weight: 600; margin-bottom: 10px; position: relative; z-index: 1; }
+    .team-affil { font-size: 12.5px; color: var(--text2); line-height: 1.55; flex: 1; position: relative; z-index: 1; }
+    .team-links { display: flex; justify-content: center; gap: 8px; margin-top: 16px; position: relative; z-index: 1; }
+    .team-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 9px;
       background: var(--bg2); border: 1px solid var(--border2);
-      color: var(--text); text-decoration: none;
-      padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 600;
-      transition: all var(--transition);
+      color: var(--text); transition: all var(--transition);
     }
-    .dev-link:hover { border-color: var(--accent); color: var(--accent); background: var(--bg3); }
-    .dev-skills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 28px 0; }
-    .dev-skill {
-      background: var(--bg2); border: 1px solid var(--border2);
-      color: var(--text2); font-size: 12px; font-weight: 600;
-      padding: 5px 14px; border-radius: 100px;
-    }
+    .team-link:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ── DOWNLOAD HERO ───────────────────────────────────────────────── */
     .download-section {
@@ -628,7 +628,7 @@
     <li><a href="#how-it-works">How it works</a></li>
     <li><a href="#plans">Plans</a></li>
     <li><a href="#requirements">Requirements</a></li>
-    <li><a href="#developer">Developer</a></li>
+    <li><a href="#developer">Team</a></li>
   </ul>
   <div class="nav-actions">
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme" id="themeBtn">🌙</button>
@@ -1143,48 +1143,50 @@
 <!-- ── DEVELOPER ──────────────────────────────────────────────────────── -->
 <section id="developer">
   <div class="inner">
-    <div class="section-tag">The Developer</div>
+    <div class="section-tag">The Team</div>
     <h2 class="section-title">Built with passion for<br/>privacy-preserving AI</h2>
 
-    <div class="dev-card reveal">
-      <div class="dev-avatar-wrap">
-        <div class="dev-avatar">Z</div>
-        <div class="dev-badge">✓</div>
-      </div>
-      <div class="dev-name">Zia ur Rehman</div>
-      <div class="dev-title">ML / FL Researcher & Software Engineer</div>
-
-      <div class="dev-skills">
-        <span class="dev-skill">Python</span>
-        <span class="dev-skill">Federated Learning</span>
-        <span class="dev-skill">PyTorch</span>
-        <span class="dev-skill">scikit-learn</span>
-        <span class="dev-skill">PySide6 / Qt</span>
-        <span class="dev-skill">Flower FL</span>
-        <span class="dev-skill">TensorFlow Federated</span>
-        <span class="dev-skill">XAI / SHAP</span>
-        <span class="dev-skill">Differential Privacy</span>
-      </div>
-
-      <div class="dev-bio">
-        Researcher and engineer with a focus on federated learning, privacy-preserving machine learning,
-        and accessible AI tooling. FedBloom was created to make federated learning approachable for
-        everyone — from students to enterprise data scientists — without requiring a single line of code.
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar-wrap">
+          <div class="team-avatar"><img src="assets/Zia1.png" alt="Zia ur Rehman" /></div>
+          <div class="team-badge">✓</div>
+        </div>
+        <div class="team-name">Zia ur Rehman</div>
+        <div class="team-role">Lead Developer</div>
+        <div class="team-affil">Dept. of Computer Science and Information Systems, University of Limerick, Ireland</div>
+        <div class="team-links">
+          <a href="https://github.com/ziaurrehman-bit" class="team-link" target="_blank" title="GitHub">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="mailto:engrziaurrehman.kicsit@gmail.com" class="team-link" title="Email">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+          <a href="https://github.com/ziaurrehman-bit/FedBloom" class="team-link" target="_blank" title="Source Code">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </a>
+        </div>
       </div>
 
-      <div class="dev-links">
-        <a href="https://github.com/ziaurrehman-bit" class="dev-link" target="_blank">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          @ziaurrehman-bit
-        </a>
-        <a href="mailto:engrziaurrehman.kicsit@gmail.com" class="dev-link">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          engrziaurrehman.kicsit@gmail.com
-        </a>
-        <a href="https://github.com/ziaurrehman-bit/FedBloom" class="dev-link" target="_blank">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-          Source Code
-        </a>
+      <div class="team-card reveal">
+        <div class="team-avatar-wrap"><div class="team-avatar"><img src="assets/Douglas2.jpg" alt="Douglas Mota Dias" /></div></div>
+        <div class="team-name">Douglas Mota Dias</div>
+        <div class="team-role">Contributor</div>
+        <div class="team-affil">Atlantic Technological University, Galway, Ireland</div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-avatar-wrap"><div class="team-avatar"><img src="assets/saif.png" alt="Saif Ul Islam" /></div></div>
+        <div class="team-name">Saif Ul Islam</div>
+        <div class="team-role">Contributor</div>
+        <div class="team-affil">Warwick Manufacturing Group, University of Warwick, Coventry, United Kingdom</div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-avatar-wrap"><div class="team-avatar"><img src="assets/Conor2.png" alt="Conor Ryan" /></div></div>
+        <div class="team-name">Conor Ryan</div>
+        <div class="team-role">Contributor</div>
+        <div class="team-affil">Dept. of Computer Science and Information Systems, University of Limerick, Ireland</div>
       </div>
     </div>
   </div>

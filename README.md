@@ -6,9 +6,11 @@ who have data worth protecting — clinicians, bankers, researchers — and
 want federated learning's privacy benefits without needing a machine
 learning engineering team to get there.
 
-🌐 **Website:** https://ziaurrehman-bit.github.io/FedBloom-Federated-Learning-Application/
+🌐 **Website:** https://ziaurrehman-bit.github.io/FedBloom/
 📦 **Download:** see [Download](#download) below
-📖 **Source / docs:** this repository
+📖 **Source / docs:** this repository (private — the public
+[ziaurrehman-bit/FedBloom](https://github.com/ziaurrehman-bit/FedBloom) repo hosts only the
+website and release binaries)
 
 ---
 
@@ -41,10 +43,11 @@ learning engineering team to get there.
 ## Download
 
 Pre-built Windows installers are published as
-[GitHub Releases](https://github.com/ZiaUrRehman-bit/FedBloom-Federated-Learning-Application/releases).
+[GitHub Releases](https://github.com/ziaurrehman-bit/FedBloom/releases) on the public
+distribution repo.
 
 ```
-https://github.com/ZiaUrRehman-bit/FedBloom-Federated-Learning-Application/releases/latest/download/FedBloom-Setup.exe
+https://github.com/ziaurrehman-bit/FedBloom/releases/latest/download/FedBloom-Setup.exe
 ```
 
 **System requirements:** Windows 10/11 (64-bit), 4-core CPU, 4 GB RAM
