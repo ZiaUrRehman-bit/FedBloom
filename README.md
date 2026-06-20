@@ -57,17 +57,6 @@ installer bundles everything. macOS/Linux support is planned.
 > No release has been published yet — this link will go live the moment
 > the first `FedBloom-Setup.exe` is attached to a release.
 
-## Run from source
-
-Requires Python 3.10–3.12.
-
-```bash
-git clone https://github.com/ZiaUrRehman-bit/FedBloom-Federated-Learning-Application.git
-cd FedBloom-Federated-Learning-Application/files/fedbloom-stage-D/fedkit
-pip install -e .
-fedkit
-```
-
 ## License
 
 MIT — see the website footer for details.
