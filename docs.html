@@ -129,6 +129,7 @@
     .badge-free { background: rgba(74,222,128,.15); color: var(--green); }
     .badge-pro  { background: rgba(96,165,250,.15); color: #60A5FA; }
     .badge-adv  { background: rgba(167,139,250,.15); color: #A78BFA; }
+    .badge-note { background: rgba(96,165,250,.12); color: #60A5FA; font-weight: 600; }
 
     /* ── SCENARIO CARDS ── */
     .scenario-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 28px; margin: 18px 0; }
@@ -151,7 +152,7 @@
 <!-- ── TOP BAR ── -->
 <div class="topbar">
   <a href="index.html" class="topbar-logo">
-    <img src="assets/logo.png" alt="FedBloom" />
+    <img src="files/fedbloom-stage-D/fedkit/src/fedkit/gui/resources/logo.png" alt="FedBloom" />
     FedBloom
   </a>
   <div class="topbar-divider"></div>
@@ -178,9 +179,12 @@
       <a href="#datasets"       class="sidebar-link">Datasets</a>
       <a href="#models"         class="sidebar-link">Models</a>
       <a href="#aggregation"    class="sidebar-link">Aggregation</a>
+      <a href="#tree-aggregation" class="sidebar-link sub">↳ Tree Model Aggregation</a>
       <a href="#partitioners"   class="sidebar-link">Partitioners</a>
       <a href="#running"        class="sidebar-link">Running & Monitoring</a>
       <a href="#results"        class="sidebar-link">Results & Artefacts</a>
+      <a href="#settings"       class="sidebar-link">Settings</a>
+      <a href="#simulation-backend" class="sidebar-link sub">↳ Simulation Backend</a>
     </div>
     <div class="sidebar-section">
       <div class="sidebar-heading">Deployment</div>
@@ -192,7 +196,6 @@
       <div class="sidebar-heading">Advanced</div>
       <a href="#hpo"            class="sidebar-link">Hyperparameter Opt.</a>
       <a href="#privacy"        class="sidebar-link">Privacy & Security</a>
-      <a href="#assistant"      class="sidebar-link">AI Assistant</a>
       <a href="#subscription"   class="sidebar-link">Plans & Licensing</a>
     </div>
     <div class="sidebar-section">
@@ -416,6 +419,16 @@ fedkit</code></pre>
 
     <!-- MODELS -->
     <h2 id="models">Models</h2>
+    <p>
+      FedBloom ships <strong>30 federated-learning-ready models</strong> across five families. Every
+      model already knows which aggregation strategy it needs — when you pick a model in the
+      <strong>New Experiment</strong> wizard, the <strong>Aggregation strategy</strong> dropdown
+      auto-switches to the right one. You normally never have to think about this — it's covered
+      here so you understand <em>why</em> the dropdown changed.
+    </p>
+
+    <h3>Neural networks (general purpose)</h3>
+    <p>Trained with gradient descent. Aggregated with <strong>FedAvg</strong> by default (FedAdam / FedYogi / FedMedian also work — see <a href="#aggregation">Aggregation Strategies</a>).</p>
     <div class="doc-grid">
       <div class="doc-card">
         <div class="doc-card-icon">🧠</div>
@@ -425,59 +438,379 @@ fedkit</code></pre>
       <div class="doc-card">
         <div class="doc-card-icon">📉</div>
         <div class="doc-card-title">Logistic Regression <span class="badge badge-free">Free</span></div>
-        <div class="doc-card-desc">Linear model for binary and multi-class classification. Interpretable and efficient.</div>
-      </div>
-      <div class="doc-card">
-        <div class="doc-card-icon">🌲</div>
-        <div class="doc-card-title">Decision Tree <span class="badge badge-free">Free</span></div>
-        <div class="doc-card-desc">Rule-based model. Easy to explain to non-technical stakeholders.</div>
-      </div>
-      <div class="doc-card">
-        <div class="doc-card-icon">🌳</div>
-        <div class="doc-card-title">Random Forest <span class="badge badge-free">Free</span></div>
-        <div class="doc-card-desc">Ensemble of decision trees. Robust and accurate for tabular data.</div>
-      </div>
-      <div class="doc-card">
-        <div class="doc-card-icon">🚀</div>
-        <div class="doc-card-title">XGBoost <span class="badge badge-free">Free</span></div>
-        <div class="doc-card-desc">Gradient-boosted trees. State-of-the-art for structured/tabular data.</div>
-      </div>
-      <div class="doc-card">
-        <div class="doc-card-icon">📊</div>
-        <div class="doc-card-title">Naive Bayes <span class="badge badge-free">Free</span></div>
-        <div class="doc-card-desc">Probabilistic classifier. Very fast, works well on small datasets.</div>
-      </div>
-      <div class="doc-card">
-        <div class="doc-card-icon">🖼</div>
-        <div class="doc-card-title">CNN <span class="badge badge-pro">Pro</span></div>
-        <div class="doc-card-desc">Convolutional Neural Network for image data. Works with MNIST, CIFAR-10.</div>
+        <div class="doc-card-desc">Linear model trained with gradient descent for binary and multi-class classification. Interpretable and efficient.</div>
       </div>
       <div class="doc-card">
         <div class="doc-card-icon">⚡</div>
         <div class="doc-card-title">DNN <span class="badge badge-pro">Pro</span></div>
-        <div class="doc-card-desc">Deep Neural Network. More layers than MLP; good for complex tabular tasks.</div>
+        <div class="doc-card-desc">Deep Neural Network with batch-norm. More layers than MLP; good for complex tabular tasks.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🖼</div>
+        <div class="doc-card-title">Simple CNN <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Convolutional Neural Network for image data. Works with MNIST, CIFAR-10.</div>
       </div>
       <div class="doc-card">
         <div class="doc-card-icon">🏆</div>
-        <div class="doc-card-title">ResNet18 <span class="badge badge-pro">Pro</span></div>
-        <div class="doc-card-desc">Residual network for image classification. Transfer learning ready.</div>
+        <div class="doc-card-title">ResNet-18 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Residual network (skip connections) for image classification. Transfer-learning ready.</div>
       </div>
       <div class="doc-card">
         <div class="doc-card-icon">📏</div>
         <div class="doc-card-title">Linear SVM <span class="badge badge-pro">Pro</span></div>
-        <div class="doc-card-desc">Support Vector Machine with linear kernel. Good for high-dimensional data.</div>
+        <div class="doc-card-desc">Margin-based classifier trained with hinge loss via gradient descent. Good for high-dimensional data.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🧩</div>
+        <div class="doc-card-title">Custom NN (Builder) <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Design your own architecture visually — stack Conv2d, pooling, Linear, BatchNorm, Dropout, and activation layers.</div>
+      </div>
+    </div>
+
+    <h3>Image classification (pretrained, TorchVision)</h3>
+    <p>Industry-standard architectures with optional ImageNet-pretrained weights, fine-tuned federatedly. All use <strong>FedAvg</strong>.</p>
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">📱</div>
+        <div class="doc-card-title">MobileNetV2 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~3.4M parameters. Low communication cost (~13 MB/round) — good for many/slow clients.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📲</div>
+        <div class="doc-card-title">MobileNetV3 Small <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~2.5M parameters, hard-swish activations (~10 MB/round). Built for resource-constrained edge devices.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">⚙️</div>
+        <div class="doc-card-title">EfficientNet-B0 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~5.3M parameters. Compound-scaled depth/width/resolution. Strong accuracy-per-MB trade-off (~21 MB/round).</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🏛</div>
+        <div class="doc-card-title">VGG-16 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~138M parameters — very high communication cost (~528 MB/round). Use <code>freeze_backbone</code> for practical FL.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🔗</div>
+        <div class="doc-card-title">DenseNet-121 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~8M parameters (~32 MB/round). Dense skip connections between every layer for strong gradient flow.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🔀</div>
+        <div class="doc-card-title">ShuffleNetV2-x1.0 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~2.3M parameters (~9 MB/round). Channel-shuffle operations for mobile-grade efficiency.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🧯</div>
+        <div class="doc-card-title">SqueezeNet 1.1 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~1.2M parameters — the smallest model FedBloom ships (~4.8 MB/round). Fire modules give near-AlexNet accuracy at a fraction of the size.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🌀</div>
+        <div class="doc-card-title">GoogLeNet (Inception v1) <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~6.6M parameters (~26 MB/round). Multi-scale Inception modules processing features at several resolutions in parallel.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">👁</div>
+        <div class="doc-card-title">ViT-B/16 <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">~86M parameters — very high communication cost (~328 MB/round). Vision Transformer — splits images into 16×16 patches and applies self-attention.</div>
+      </div>
+    </div>
+    <div class="callout callout-note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body"><strong>Communication cost</strong> is how much data each client uploads/downloads per round — it scales with parameter count. For slow networks or many clients, prefer MobileNetV3 Small or MobileNetV2 over VGG-16.</div>
+    </div>
+
+    <h3>Tabular deep learning</h3>
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">🎯</div>
+        <div class="doc-card-title">TabNet <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Sequential attention picks the most relevant features at each reasoning step — interpretable and accurate. FedAvg.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🛣</div>
+        <div class="doc-card-title">Wide &amp; Deep <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Google's architecture: a wide linear path (memorization) plus a deep MLP path (generalization). FedAvg.</div>
+      </div>
+    </div>
+
+    <h3 id="tree-models">Tree-based &amp; boosting models <span class="badge badge-note">specialised aggregation</span></h3>
+    <p>
+      <strong>These don't have gradients</strong> — a decision tree is a sequence of yes/no splits,
+      not a tensor of weights. Averaging two trees' numbers together produces nonsense, so FedBloom
+      uses three purpose-built aggregation strategies instead of FedAvg for these models:
+      <strong>FedForest</strong>, <strong>FedBoost</strong>, and <strong>FedBayes</strong>. Each is explained
+      with a worked example in <a href="#tree-aggregation">How Tree Models Aggregate</a> below.
+    </p>
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">🌲</div>
+        <div class="doc-card-title">Decision Tree <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">A single CART tree. Rule-based and easy to explain to non-technical stakeholders. Aggregation: <code>FedForest</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🌳</div>
+        <div class="doc-card-title">Random Forest <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Each client grows its own forest; FedBloom merges every client's trees into one bigger global forest. Aggregation: <code>FedForest</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🎲</div>
+        <div class="doc-card-title">Extra Trees <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Like Random Forest but splits are chosen at random instead of searched for — faster, similar accuracy. Aggregation: <code>FedForest</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🚀</div>
+        <div class="doc-card-title">XGBoost <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Gradient-boosted trees, built sequentially. Each client adds trees on top of the global booster. Aggregation: <code>FedBoost</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📈</div>
+        <div class="doc-card-title">Hist Gradient Boosting <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Scikit-learn's native histogram boosting. Handles missing values natively, fast on large data. Aggregation: <code>FedBoost</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🔁</div>
+        <div class="doc-card-title">AdaBoost <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Sequence of decision stumps, each focused on the previous stump's mistakes. Aggregation: <code>FedBoost</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">💡</div>
+        <div class="doc-card-title">LightGBM <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Microsoft's leaf-wise boosting — typically faster and lighter than XGBoost. Requires <code>pip install lightgbm</code>. Aggregation: <code>FedBoost</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🐈</div>
+        <div class="doc-card-title">CatBoost <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Yandex's ordered boosting with native categorical-feature support. Requires <code>pip install catboost</code>. Aggregation: <code>FedBoost</code>.</div>
+      </div>
+    </div>
+
+    <h3>Linear &amp; probabilistic models</h3>
+    <p>Also sklearn-based (no gradients shared with Flower), but unlike trees their parameters <em>are</em> simple vectors that can be meaningfully averaged or combined exactly.</p>
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-card-icon">📐</div>
+        <div class="doc-card-title">Ridge Classifier <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">L2-regularized linear classifier. Each client warm-starts from the global weights and the server averages coefficients. Aggregation: <code>FedLinear</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">🕸</div>
+        <div class="doc-card-title">Elastic Net (SGD) <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">L1+L2 regularized linear model — promotes sparse, automatic feature selection. Aggregation: <code>FedLinear</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">⚔</div>
+        <div class="doc-card-title">LinearSVC <span class="badge badge-pro">Pro</span></div>
+        <div class="doc-card-desc">Maximum-margin linear classifier. Good for high-dimensional, text-like tabular features. Aggregation: <code>FedLinear</code>.</div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">📊</div>
+        <div class="doc-card-title">Naive Bayes <span class="badge badge-free">Free</span></div>
+        <div class="doc-card-desc">Probabilistic classifier. The only model with provably <strong>exact</strong>, zero-error federated aggregation. Aggregation: <code>FedBayes</code>.</div>
       </div>
     </div>
 
     <!-- AGGREGATION -->
     <h2 id="aggregation">Aggregation Strategies</h2>
-    <p>The aggregation strategy controls how client model updates are combined into the global model.</p>
+    <p>
+      The aggregation strategy controls how the server combines what each client sends back into one
+      improved global model. FedBloom's <strong>New Experiment</strong> wizard exposes 9 strategies —
+      4 work on any gradient-based model, 4 are auto-selected for sklearn/tree models (see
+      <a href="#tree-aggregation">How Tree Models Aggregate</a>), and one handles non-IID clients.
+    </p>
+    <div class="callout callout-note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">None of the strategies below are plan-gated — every plan can select any of them. What <em>is</em> gated by plan is which <strong>models</strong> and <strong>deployment modes</strong> you can use (see <a href="#models">Models</a> and <a href="#subscription">Plans &amp; Licensing</a>).</div>
+    </div>
     <table>
-      <tr><th>Strategy</th><th>Best for</th><th>Plan</th></tr>
-      <tr><td><strong>FedAvg</strong></td><td>General use. Averages client weights proportional to dataset size.</td><td><span class="badge badge-free">Free</span></td></tr>
-      <tr><td><strong>FedProx</strong></td><td>Non-IID data. Adds a proximal term to handle heterogeneous clients.</td><td><span class="badge badge-pro">Pro</span></td></tr>
-      <tr><td><strong>Krum</strong></td><td>Byzantine robustness. Detects and ignores potentially malicious clients.</td><td><span class="badge badge-adv">Advanced</span></td></tr>
+      <tr><th>Strategy</th><th>How it works</th><th>Best for</th><th>Works in</th></tr>
+      <tr>
+        <td><strong>FedAvg</strong></td>
+        <td>Weighted mean of client weights, proportional to each client's number of training examples.</td>
+        <td>General-purpose default for all neural networks.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>FedAdam</strong></td>
+        <td>FedAvg, then the server runs one Adam optimizer step on the aggregated result.</td>
+        <td>Faster convergence on larger neural nets.</td>
+        <td>Real deployment only — simulation falls back to plain FedAvg</td>
+      </tr>
+      <tr>
+        <td><strong>FedYogi</strong></td>
+        <td>Same idea as FedAdam, using the Yogi optimizer — often steadier on non-IID data.</td>
+        <td>Non-IID clients on a real deployment.</td>
+        <td>Real deployment only — simulation falls back to plain FedAvg</td>
+      </tr>
+      <tr>
+        <td><strong>FedMedian</strong></td>
+        <td>Element-wise <em>median</em> of client weights instead of the mean — outliers get ignored rather than averaged in.</td>
+        <td>Suspected bad/noisy clients, mild Byzantine robustness.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>Krum</strong></td>
+        <td>Scores each client by distance to its nearest neighbours, then keeps <em>only</em> the most consistent client(s) — outliers are discarded entirely rather than blended in.</td>
+        <td>Suspected malicious/poisoned clients. Needs ≥ 3 clients.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>FedProx</strong></td>
+        <td>Adds a proximal penalty (μ·‖w − w_global‖²) to each client's local loss so updates can't drift too far from the global model.</td>
+        <td>Designed for heterogeneous/non-IID clients with stragglers.</td>
+        <td>See limitation note below</td>
+      </tr>
+      <tr>
+        <td><strong>FedLinear</strong></td>
+        <td>Weighted average of <code>coef_</code>/<code>intercept_</code> vectors — exact under IID data.</td>
+        <td>Ridge, Elastic Net, LinearSVC. Auto-selected.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>FedForest</strong></td>
+        <td>Server collects every client's trees and unions them into one majority-vote ensemble.</td>
+        <td>Decision Tree, Random Forest, Extra Trees. Auto-selected.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>FedBoost</strong></td>
+        <td>Server keeps the booster from the client that trained on the most local data each round.</td>
+        <td>XGBoost, HistGB, AdaBoost, LightGBM, CatBoost. Auto-selected.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
+      <tr>
+        <td><strong>FedBayes</strong></td>
+        <td>Server fuses per-class sufficient statistics (counts, means, variances) — zero approximation error.</td>
+        <td>Naive Bayes. Auto-selected.</td>
+        <td>Simulation &amp; Real deployment</td>
+      </tr>
     </table>
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">
+        <strong>Current limitation:</strong> FedProx's proximal penalty is implemented on the server-side
+        strategy, but FedBloom's built-in PyTorch client doesn't yet add the matching proximal term to its
+        local loss. Until that lands, selecting FedProx trains identically to FedAvg. FedAdam/FedYogi/FedMedian
+        do not have this limitation.
+      </div>
+    </div>
+
+    <!-- TREE AGGREGATION DEEP DIVE -->
+    <h2 id="tree-aggregation">How Tree Models Aggregate</h2>
+    <p>
+      Neural networks are made of numbers (weights) that live in a shared vector space — averaging
+      two networks' weights gives you something meaningful in between. Trees, forests, and boosters
+      aren't like that: a tree is a nested sequence of "if feature X &lt; 5, go left" rules. Averaging
+      two trees' split thresholds produces a tree that doesn't represent either client's logic. FedBloom
+      solves this with three different strategies depending on what the model actually is.
+    </p>
+
+    <h3>FedForest — tree union (Decision Tree, Random Forest, Extra Trees)</h3>
+    <p>Used for models that are themselves just "a bunch of trees that vote."</p>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body"><p>Each round, every client grows a <strong>fresh</strong> tree/forest on its own local data — a different random seed every round, so the trees are never duplicates.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body"><p>The server collects every tree from every client and pools them into one ensemble that predicts by <strong>majority vote</strong>.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body"><p>Next round's pool keeps the previous global trees and adds this round's new ones, up to a cap of <strong>1,500 trees</strong> — past that, the oldest trees are dropped first.</p></div>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Worked example — Random Forest, 4 clients:</strong> each client's Random Forest is
+        configured to grow 50 trees locally. Round 1: the server collects 4 × 50 = <strong>200 trees</strong>
+        into the global forest. Round 2: each client grows 50 <em>new</em> trees again; the server keeps
+        the 200 from round 1 and adds the 200 new ones, for <strong>400 trees</strong> total. This keeps
+        growing every round (more diverse trees → stronger ensemble) until the 1,500-tree cap is hit,
+        after which the oldest round's trees retire to make room.
+      </div>
+    </div>
+    <p>To predict a label, every tree in the pool votes for a class and the majority wins — exactly like a single Random Forest, just grown collaboratively across clients who never shared raw data.</p>
+
+    <h3>FedBoost — best-client selection (XGBoost, HistGB, AdaBoost, LightGBM, CatBoost)</h3>
+    <p>Boosting models build trees <em>sequentially</em> — each new tree corrects the previous tree's mistakes — so unlike a forest, you can't just throw all clients' trees into one pool; the sequence matters.</p>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body"><p>The server sends the current global booster to every client.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body"><p><strong>XGBoost only:</strong> each client continues boosting on top of the global booster (adds new trees to it) using its own local data. Other boosters (LightGBM, CatBoost, AdaBoost, HistGB) train a fresh booster from scratch on local data each round.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body"><p>The server keeps <strong>one</strong> client's booster as the new global model — specifically, the booster from whichever client trained on the <strong>most local data</strong> that round — and discards the rest.</p></div>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Worked example — XGBoost, 3 hospitals:</strong> Hospital A has 800 patient records,
+        Hospital B has 1,200, Hospital C has 400. Each trains 50 more boosting rounds on top of the
+        global booster. The server picks <strong>Hospital B's</strong> updated booster (most training
+        data) as next round's global model, and Hospitals A and C's updates are discarded for that round.
+        Next round, all three continue from Hospital B's booster.
+      </div>
+    </div>
+    <div class="callout callout-note">
+      <span class="callout-icon">ℹ️</span>
+      <div class="callout-body">Only XGBoost truly continues boosting round-over-round (via its <code>xgb_model</code> warm-start parameter). The other boosting models restart from scratch each round, so FedBoost is most powerful with XGBoost specifically — the others benefit more from running fewer, longer local rounds than many short federated ones.</div>
+    </div>
+
+    <h3>FedBayes — exact statistics fusion (Naive Bayes)</h3>
+    <p>Naive Bayes is the one model in FedBloom with <strong>mathematically exact</strong> federated aggregation — zero accuracy loss compared to training on everyone's data pooled together.</p>
+    <div class="doc-steps">
+      <div class="doc-step">
+        <div class="doc-step-num">1</div>
+        <div class="doc-step-body"><p>Each client computes, per class, just three numbers per feature: <strong>how many examples</strong>, the <strong>mean</strong>, and the <strong>variance</strong>. No raw records are sent — only these summary statistics.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">2</div>
+        <div class="doc-step-body"><p>The server combines the counts with a weighted sum, and the means with a sample-weighted average.</p></div>
+      </div>
+      <div class="doc-step">
+        <div class="doc-step-num">3</div>
+        <div class="doc-step-body"><p>Variances are combined with the <strong>parallel-variance formula</strong> (it also folds in how far each client's mean was from the global mean, so spread-out client means correctly increase the global variance):</p></div>
+      </div>
+    </div>
+    <pre><code><span class="hlc"># Parallel-variance formula FedBloom's server runs:</span>
+<span class="hlb">sigma2_global</span> = sum(n_i * (sigma2_i + (mu_i - mu_global)**2)) / N_total</code></pre>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Worked example — 2 hospitals, feature = patient age:</strong> Hospital A reports
+        300 diseased patients, mean age 55, variance 100. Hospital B reports 100 diseased patients,
+        mean age 70, variance 60. The global mean is the weighted average:
+        (300×55 + 100×70) / 400 = <strong>58.75</strong>. The global variance folds in both clients'
+        own spread <em>and</em> the fact their means disagreed by 11.25–15 years — producing a
+        global Naive Bayes model that is identical to one trained on all 400 patients' raw ages,
+        even though no hospital ever saw the other's patient records.
+      </div>
+    </div>
+
+    <h3>FedLinear — coefficient averaging (Ridge, Elastic Net, LinearSVC)</h3>
+    <p>Linear models <em>do</em> have weights that live in a shared vector space (a coefficient per feature, plus an intercept), so — unlike trees — straightforward weighted averaging works well here, similar in spirit to FedAvg but operating on sklearn's <code>coef_</code>/<code>intercept_</code> arrays instead of PyTorch tensors.</p>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body">
+        <strong>Worked example — Ridge Classifier, 2 banks:</strong> Bank A (700 transactions) learns
+        coefficient 0.40 for a "transaction amount" feature; Bank B (300 transactions) learns 0.10 for
+        the same feature. The global coefficient is the sample-weighted average:
+        0.40×0.7 + 0.10×0.3 = <strong>0.31</strong>. Next round, both banks <em>warm-start</em> their
+        local training from 0.31 instead of their own previous value, so the global model keeps
+        improving round over round — unlike the tree strategies above, where clients always start
+        fresh.
+      </div>
+    </div>
 
     <!-- PARTITIONERS -->
     <h2 id="partitioners">Partitioners</h2>
@@ -541,6 +874,82 @@ fedkit</code></pre>
       <div class="callout-body">Saved <code>.pkl</code> model files can be loaded directly in Python using <code>pickle.load()</code> for inference or further fine-tuning.</div>
     </div>
 
+    <!-- SETTINGS -->
+    <h2 id="settings">Settings</h2>
+    <p>Open <strong>Settings</strong> from the sidebar to control appearance, simulation behaviour, email, and licensing. The most important option to understand is the simulation backend toggle, explained below.</p>
+
+    <h3 id="simulation-backend">Simulation backend — "Use Ray multi-process backend"</h3>
+    <p>
+      When you run a simulation experiment, FedBloom has two ways to run the virtual clients
+      on your machine. This checkbox in <strong>Settings → Simulation</strong> switches between them.
+    </p>
+
+    <div class="doc-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
+      <div class="doc-card">
+        <div class="doc-card-icon">✅</div>
+        <div class="doc-card-title">Default (checkbox OFF)</div>
+        <div class="doc-card-desc">
+          All virtual clients train one after another in a single background thread.
+          Client 1 trains → server aggregates → Client 2 trains → repeat.<br><br>
+          Simple, stable, no extra software needed.
+        </div>
+      </div>
+      <div class="doc-card">
+        <div class="doc-card-icon">⚡</div>
+        <div class="doc-card-title">Ray multi-process (checkbox ON)</div>
+        <div class="doc-card-desc">
+          Uses a distributed computing framework called Ray to run multiple virtual clients
+          at the same time in separate background processes.<br><br>
+          Faster for large numbers of clients — but has compatibility requirements.
+        </div>
+      </div>
+    </div>
+
+    <h4>Which should you choose?</h4>
+    <table>
+      <tr><th>Your device</th><th>Recommendation</th><th>Why</th></tr>
+      <tr>
+        <td><strong>Windows</strong></td>
+        <td>✅ Leave checkbox <strong>OFF</strong></td>
+        <td>See below — Ray has known stability problems on Windows</td>
+      </tr>
+      <tr>
+        <td><strong>macOS</strong></td>
+        <td>Leave OFF for most use cases. Turn ON if you have 20+ clients and rounds feel slow.</td>
+        <td>Ray works well on macOS. Small experiments don't benefit enough to be worth the extra complexity.</td>
+      </tr>
+      <tr>
+        <td><strong>Linux</strong></td>
+        <td>Can turn ON for large experiments (20+ clients)</td>
+        <td>Ray is most stable on Linux. Genuinely speeds up multi-client training.</td>
+      </tr>
+    </table>
+
+    <h4>Windows — why to keep it OFF</h4>
+    <p>If you enable the Ray backend on Windows, you may experience one or more of the following:</p>
+    <ul>
+      <li><strong>Training freezes or crashes</strong> — Windows launches new processes differently from Linux/macOS. Each Ray worker process must fully reload all libraries from scratch, which can fail or get stuck, especially when PyTorch is involved.</li>
+      <li><strong>Windows Defender / Firewall prompts</strong> — Ray runs a small internal server on your machine to coordinate its worker processes. Windows often flags this and prompts you to allow the connection, which interrupts the training session.</li>
+      <li><strong>Zombie processes after stopping a run</strong> — If you stop a training run mid-way, Ray worker processes can get stuck in the background. You may need to open Task Manager to close them manually.</li>
+      <li><strong>No speed benefit</strong> — Even when it works, the overhead of launching and coordinating separate processes on Windows usually cancels out any parallelism benefit for typical experiment sizes.</li>
+    </ul>
+    <div class="callout callout-warn">
+      <span class="callout-icon">⚠️</span>
+      <div class="callout-body">On Windows, turning this option ON can cause training to hang silently with no error message. If your simulation appears to start but never completes a round, check whether this setting is on and turn it back off.</div>
+    </div>
+
+    <h4>Does "OFF" mean slower training?</h4>
+    <p>
+      Not meaningfully for typical use. Running clients sequentially means your machine still uses all
+      its CPU/GPU capacity — it's just doing one virtual client at a time rather than several simultaneously.
+      For experiments with 2–50 clients and 5–30 rounds, the difference in total wall-clock time is
+      rarely noticeable. The sequential mode is what FedBloom was built and tested on for Windows.
+    </p>
+    <div class="callout callout-tip">
+      <span class="callout-icon">💡</span>
+      <div class="callout-body"><strong>When would ON actually help?</strong> If you're on Linux or macOS, running 50+ virtual clients per round, and each round is taking several minutes — turning this on can cut round time significantly by training multiple clients in parallel.</div>
+    </div>
+
     <!-- LOCAL NETWORK -->
     <h2 id="local-network">Local Network Deployment</h2>
     <p>When all participants are on the same WiFi or LAN:</p>
@@ -600,8 +1009,12 @@ fedkit</code></pre>
       <li><strong>Noise multiplier</strong> — higher = more privacy, lower accuracy</li>
       <li><strong>Max grad norm</strong> — clips gradients before adding noise</li>
     </ul>
-    <h3>Krum Aggregation</h3>
-    <p>Krum filters out model updates that deviate significantly from the majority — protecting against poisoning attacks from compromised clients. Available on the <span class="badge badge-adv">Advanced</span> plan.</p>
+    <h3>Robustness against bad clients</h3>
+    <p>FedBloom has two aggregation strategies for this (see <a href="#aggregation">Aggregation Strategies</a>):</p>
+    <ul>
+      <li><strong>FedMedian</strong> — element-wise median of client updates instead of the mean. Cheap, always-on protection: a misbehaving client's update gets outvoted rather than blended in.</li>
+      <li><strong>Krum</strong> — scores every client by distance to its nearest neighbours and keeps <em>only</em> the most consistent client(s), discarding anything that looks like an outlier entirely. Stronger guarantee, more compute (needs at least 3 participating clients).</li>
+    </ul>
 
     <!-- ASSISTANT -->
     <h2 id="assistant">AI Assistant <span class="badge badge-adv">Advanced</span></h2>
@@ -623,7 +1036,7 @@ fedkit</code></pre>
       <tr><td>Differential Privacy</td><td>—</td><td>✓</td><td>✓</td></tr>
       <tr><td>HPO</td><td>—</td><td>✓</td><td>✓</td></tr>
       <tr><td>Real network deployment</td><td>—</td><td>✓</td><td>✓</td></tr>
-      <tr><td>Krum aggregation</td><td>—</td><td>—</td><td>✓</td></tr>
+      <tr><td>LightGBM / CatBoost / HistGB models</td><td>—</td><td>✓</td><td>✓</td></tr>
       <tr><td>XAI / SHAP</td><td>—</td><td>—</td><td>✓</td></tr>
       <tr><td>AI Assistant</td><td>—</td><td>—</td><td>✓</td></tr>
     </table>
@@ -668,8 +1081,7 @@ fedkit</code></pre>
       <ol>
         <li>Each bank exports a transaction CSV with features (amount, time, merchant category) and a fraud label.</li>
         <li>Upload CSVs locally to each bank's FedBloom instance (data never leaves the bank).</li>
-        <li>Server creates experiment: Model = <em>XGBoost</em>, Partitioner = <em>Dirichlet</em> (realistic non-IID).</li>
-        <li>Aggregate with <strong>Krum</strong> to guard against a potentially compromised participant.</li>
+        <li>Server creates experiment: Model = <em>XGBoost</em>, Partitioner = <em>Dirichlet</em> (realistic non-IID). The aggregation strategy auto-switches to <strong>FedBoost</strong> — see <a href="#tree-aggregation">How Tree Models Aggregate</a>.</li>
         <li>Global model catches fraud patterns that no single bank's local model could detect.</li>
       </ol>
     </div>
@@ -721,7 +1133,7 @@ fedkit</code></pre>
           <div class="scenario-sector">Academia · Research</div>
         </div>
       </div>
-      <p><strong>Problem:</strong> A researcher wants to benchmark FedAvg vs FedProx on non-IID data without writing framework code.</p>
+      <p><strong>Problem:</strong> A researcher wants to benchmark FedAvg vs FedMedian on non-IID data without writing framework code.</p>
       <p><strong>FedBloom solution:</strong></p>
       <ol>
         <li>Create two experiments with identical settings, changing only the aggregation strategy.</li>
