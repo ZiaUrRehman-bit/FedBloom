@@ -1032,16 +1032,18 @@
       <div class="plan-card reveal">
         <div class="plan-icon">⊞</div>
         <div class="plan-name">Free</div>
-        <div class="plan-tagline">Get started with federated learning</div>
+        <div class="plan-tagline">Explore federated learning at no cost</div>
         <div class="plan-price">€0 <span>/mo</span></div>
         <div class="plan-period">Free forever · no card needed</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li>Up to 5 simulated clients</li>
-          <li>MLP, Logistic Regression, Trees</li>
-          <li>Accuracy, Loss, F1 metrics</li>
+          <li>10 core models — MLP, Logistic Regression, Decision Tree, Random Forest, XGBoost, Extra Trees, AdaBoost, Naive Bayes, Ridge, Elastic Net</li>
+          <li>Accuracy, Loss, F1, ROC metrics — global &amp; local charts</li>
+          <li>All 9 aggregation strategies</li>
+          <li>IID, Dirichlet, Label Shard &amp; Custom partitioners</li>
+          <li>Results &amp; Artefacts export (CSV, ZIP, .pkl)</li>
           <li>Local FL simulation</li>
-          <li>FedAvg aggregation</li>
         </ul>
         <button class="btn-plan btn-plan-free" onclick="document.getElementById('download').scrollIntoView({behavior:'smooth'})">Download Free</button>
       </div>
@@ -1057,11 +1059,15 @@
         <ul class="plan-features">
           <li>Everything in Free, plus:</li>
           <li>Up to 50 simulated clients</li>
-          <li>CNN · DNN · ResNet18 models</li>
-          <li>Differential privacy (DP-SGD)</li>
-          <li>Hyperparameter optimisation</li>
-          <li>Real network deployment</li>
-          <li>FedProx aggregation</li>
+          <li>20+ extended models — CNN, DNN, ResNet-18, Linear SVM, Custom NN Builder</li>
+          <li>9 TorchVision models — MobileNetV2/V3, EfficientNet-B0, VGG-16, DenseNet-121, ViT-B/16 &amp; more</li>
+          <li>TabNet · Wide &amp; Deep tabular deep learning</li>
+          <li>HistGradientBoosting · LightGBM · CatBoost · LinearSVC</li>
+          <li>Differential privacy (DP-SGD via Opacus)</li>
+          <li>Hyperparameter optimisation (HPO)</li>
+          <li>Real network deployment — LAN, Tailscale, port forwarding + TLS</li>
+          <li>FL Plans — server pushes model &amp; config to clients</li>
+          <li>Server–client in-app chat</li>
         </ul>
         <button class="btn-plan btn-plan-upgrade">Get Pro — €3/mo</button>
       </div>
@@ -1070,15 +1076,16 @@
       <div class="plan-card reveal">
         <div class="plan-icon">✦</div>
         <div class="plan-name">Advanced</div>
-        <div class="plan-tagline">Maximum scale with explainability</div>
+        <div class="plan-tagline">Maximum clients, unlearning &amp; explainability</div>
         <div class="plan-price">€5 <span>/mo</span></div>
         <div class="plan-period">Billed monthly · cancel anytime</div>
         <div class="plan-divider"></div>
         <ul class="plan-features">
           <li>Everything in Pro, plus:</li>
-          <li>Up to 500 simulated clients</li>
-          <li>Krum robust aggregation</li>
-          <li>Explainability (XAI / SHAP)</li>
+          <li>Up to 100 simulated clients</li>
+          <li>Federated Machine Unlearning — remove a client's data influence post-training</li>
+          <li>Explainability — XAI / SHAP feature importance</li>
+          <li>AI Assistant — local LLM via Ollama</li>
           <li>Priority support</li>
         </ul>
         <button class="btn-plan btn-plan-upgrade">Get Advanced — €5/mo</button>
